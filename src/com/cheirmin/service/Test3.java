@@ -22,7 +22,6 @@ public class Test3 {
             InetAddress ip = InetAddress.getByName(targetIP);
             //拼接 显示消息来源
             str = sendIP.concat(";").concat(targetIP).concat(";").concat(str);
-            System.out.println(str);
             //传输语句
             byte[] data = str.getBytes();
             DatagramPacket  dp = new DatagramPacket(data,data.length,ip,9090);
@@ -49,13 +48,12 @@ public class Test3 {
                 socket.receive(dp);
                 byte[] data = Arrays.copyOf(b,dp.getLength());
                 String str = new String(data);
-                System.out.println("新收到消息："+str);
 
                 //回复消息 数据解析
                 strings= str.split(";");
 
                 sender(strings[0],strings[1],strings[2]);
-                System.out.println("消息解析成功，已转发--"+str);
+                System.out.println("新消息解析成功，已转发--"+str);
             }
         } catch (SocketException e) {
             e.printStackTrace();

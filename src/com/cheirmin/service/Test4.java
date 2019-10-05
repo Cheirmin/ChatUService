@@ -15,30 +15,30 @@ public class Test4 {
     public static InetAddress localIp = null;
     public static void main(String[] args) {
         new Thread(()->{
-            sender("192.168.1.104","哈哈，是我");
+            sender("192.168.1.104","120.79.132.62","哈哈，是我");
         }).start();
         new Thread(()->{
 //            recever();
         }).start();
     }
 
-    public static void sender(String targetIP,String str){
+    public static void sender(String targetIP,String serviceIP,String str){
         try {
             //socket
             DatagramSocket socket = new DatagramSocket();
             //ip
-            InetAddress ip = InetAddress.getByName("192.168.1.104");
+            InetAddress ip = InetAddress.getByName(serviceIP);
 
             //客户端ip
             String clientIP = InetAddress.getLocalHost().getHostAddress();
 
             //拼接ip+数据
             str = clientIP.concat(";").concat(targetIP).concat(";").concat(str);
-            System.out.println("数据="+str);
 
             byte[] data = str.getBytes();
             DatagramPacket  dp = new DatagramPacket(data,data.length,ip,9090);
             socket.send(dp);
+            System.out.println("数据="+str);
         } catch (SocketException e) {
             e.printStackTrace();
         } catch (IOException e) {
