@@ -24,7 +24,7 @@ public class Test3 {
             DatagramSocket socket = new DatagramSocket();
             //ip
             byte[] ip2 = {120,79, (byte) 132,62};
-            InetAddress ip = InetAddress.getByName("www.cheirmin.top");
+            InetAddress ip = InetAddress.getByName("172.16.252.221");
             //传输语句
             int i=0;
             while (true){
