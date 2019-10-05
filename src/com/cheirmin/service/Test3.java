@@ -24,13 +24,14 @@ public class Test3 {
             DatagramSocket socket = new DatagramSocket();
             //ip
             InetAddress ip = InetAddress.getLocalHost();
+            System.out.println();
             //传输语句
             int i=0;
             while (true){
                 String str = new String();
                 str = sc.next();
                 byte[] data = str.getBytes();
-                DatagramPacket  dp = new DatagramPacket(data,data.length,ip,9090);
+                DatagramPacket  dp = new DatagramPacket(data,data.length,ip,9999);
                 socket.send(dp);
             }
         } catch (SocketException e) {
@@ -53,7 +54,6 @@ public class Test3 {
             while (true){
                 //开启接收
                 socket.receive(dp);
-
                 byte[] data = Arrays.copyOf(b,dp.getLength());
                 String str = new String(data);
                 System.out.println("长度"+dp.getLength()+"  数据："+str);
@@ -63,5 +63,9 @@ public class Test3 {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean send(String message){
+        return false;
     }
 }
