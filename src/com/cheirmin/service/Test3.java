@@ -24,14 +24,15 @@ public class Test3 {
             DatagramSocket socket = new DatagramSocket();
             //ip
             byte[] ip2 = {120,79, (byte) 132,62};
-            InetAddress ip = InetAddress.getByName("172.16.252.221");
+            InetAddress ip = InetAddress.getByName("120.79.132.62");
+            System.out.println(ip);
             //传输语句
             int i=0;
             while (true){
                 String str = new String();
                 str = sc.next();
                 byte[] data = str.getBytes();
-                DatagramPacket  dp = new DatagramPacket(data,data.length,ip,5000);
+                DatagramPacket  dp = new DatagramPacket(data,data.length,ip,9090);
                 socket.send(dp);
             }
         } catch (SocketException e) {
@@ -43,7 +44,7 @@ public class Test3 {
 
     public static void recever(){
         try {
-            DatagramSocket socket = new DatagramSocket(5000);
+            DatagramSocket socket = new DatagramSocket(9090);
 
             byte[] b = new byte[1024*64];
 
