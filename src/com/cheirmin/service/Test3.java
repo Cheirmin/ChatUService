@@ -23,15 +23,15 @@ public class Test3 {
             Scanner sc = new Scanner(System.in);
             DatagramSocket socket = new DatagramSocket();
             //ip
-            InetAddress ip = InetAddress.getLocalHost();
-            System.out.println();
+            byte[] ip2 = {120,79, (byte) 132,62};
+            InetAddress ip = InetAddress.getByName("www.cheirmin.top");
             //传输语句
             int i=0;
             while (true){
                 String str = new String();
                 str = sc.next();
                 byte[] data = str.getBytes();
-                DatagramPacket  dp = new DatagramPacket(data,data.length,ip,9999);
+                DatagramPacket  dp = new DatagramPacket(data,data.length,ip,5000);
                 socket.send(dp);
             }
         } catch (SocketException e) {
@@ -43,7 +43,7 @@ public class Test3 {
 
     public static void recever(){
         try {
-            DatagramSocket socket = new DatagramSocket(9090);
+            DatagramSocket socket = new DatagramSocket(5000);
 
             byte[] b = new byte[1024*64];
 
