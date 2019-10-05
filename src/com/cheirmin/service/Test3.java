@@ -1,40 +1,32 @@
 package com.cheirmin.service;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.*;
 import java.util.Arrays;
-import java.util.Scanner;
 
+/**
+ * 模拟服务器端，接收192.168.1.104的数据
+ * 发送的时候需要获取客户端传来的数据
+ */
 public class Test3 {
+    public static String[] strings;
     public static void main(String[] args) {
-        new Thread(()->{
-            sender();
-        }).start();
-        new Thread(()->{
-            recever();
-        }).start();
+        recever();
     }
 
-    public static void sender(){
+    public static void sender(String sendIP,String targetIP,String str){
         try {
-            Scanner sc = new Scanner(System.in);
+            //socket
             DatagramSocket socket = new DatagramSocket();
             //ip
-            byte[] ip2 = {120,79, (byte) 132,62};
-            InetAddress ip = InetAddress.getByName("120.79.132.62");
-            System.out.println(ip);
+            InetAddress ip = InetAddress.getByName(targetIP);
+            //拼接 显示消息来源
+            str = sendIP.concat(";").concat(targetIP).concat(";").concat(str);
+            System.out.println(str);
             //传输语句
-            int i=0;
-            while (true){
-                String str = new String();
-                str = sc.next();
-                byte[] data = str.getBytes();
-                DatagramPacket  dp = new DatagramPacket(data,data.length,ip,9090);
-                socket.send(dp);
-            }
+            byte[] data = str.getBytes();
+            DatagramPacket  dp = new DatagramPacket(data,data.length,ip,9090);
+            socket.send(dp);
         } catch (SocketException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -50,23 +42,25 @@ public class Test3 {
 
             DatagramPacket dp = new DatagramPacket(b,b.length);
 
-            System.out.println("数据接收中");
+            System.out.println("服务器启动成功==");
 
             while (true){
                 //开启接收
                 socket.receive(dp);
                 byte[] data = Arrays.copyOf(b,dp.getLength());
                 String str = new String(data);
-                System.out.println("长度"+dp.getLength()+"  数据："+str);
+                System.out.println("新收到消息："+str);
+
+                //回复消息 数据解析
+                strings= str.split(";");
+
+                sender(strings[0],strings[1],strings[2]);
+                System.out.println("消息解析成功，已转发--"+str);
             }
         } catch (SocketException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public boolean send(String message){
-        return false;
     }
 }
